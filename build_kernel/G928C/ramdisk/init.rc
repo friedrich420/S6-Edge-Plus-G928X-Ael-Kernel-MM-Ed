@@ -1660,5 +1660,11 @@ service daemonsu /sbin/launch_daemonsu.sh
     seclabel u:r:init:s0
     oneshot
 
+# Call Post-init script
+service aelinit /sbin/ael.sh
+    class main
+    user root
+    oneshot
+
 # SuperSU:PATCH:268
 # SuperSU:STOCK:1e0b7162d7f8b28e01afdba38361680af720386e

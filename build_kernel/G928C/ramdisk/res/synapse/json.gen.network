@@ -1,0 +1,27 @@
+#!/system/bin/sh
+
+BB=/system/xbin/busybox;
+
+cat << CTAG
+{
+    name:NETWORK,
+    elements:[
+	{ SPane:{
+		title:"TCP Congestion Control",
+		description:"Select your preferred WIFI TCP algorithm. Regulates upload and download affecting throughput in various ways."
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		description:"Default is Westwood+.\n",
+		default:$(cat proc/sys/net/ipv4/tcp_congestion_control),
+		action:"generic proc/sys/net/ipv4/tcp_congestion_control",
+		values:[`while read values; do $BB printf "%s, \n" $values; done < proc/sys/net/ipv4/tcp_available_congestion_control`]
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+    ]
+}
+CTAG
