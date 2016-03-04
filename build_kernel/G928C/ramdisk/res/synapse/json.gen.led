@@ -1,0 +1,102 @@
+#!/system/bin/sh
+
+BB=/system/xbin/busybox;
+
+cat << CTAG
+{
+    name:LED-CONTROL,
+    elements:[
+	{ SPane:{
+		title:"Brightness in High Brightness Environments"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SSeekBar:{
+		description:"Set the relative intensity of the LED when in bright environments. Default is 40.",
+		min:0,
+		max:255,
+		step:5,
+		default:`cat /sys/class/sec/led/led_highpower_current`,
+		action:"generic /sys/class/sec/led/led_highpower_current"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SPane:{
+		title:"Brightness in Low Brightness Environments"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SSeekBar:{
+		description:"Set the relative intensity of the LED when in low brightness environments. Default is 5.",
+		min:0,
+		max:255,
+		step:5,
+		default:`cat /sys/class/sec/led/led_lowpower_current`,
+		action:"generic /sys/class/sec/led/led_lowpower_current"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		title:"Enable LED Notifications",
+		description:"Enable or disable all LED notifications ! Default is Enabled.\n",
+		default:0,
+		action:"generic /sys/class/sec/led/led_always_disable",
+		values:{
+			0:"Enabled", 1:"Disable"
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SPane:{
+		title:"LED Fade-in/out time period",
+		description:"Control LED fade-in/out time period for missed notifications.",
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		title:"LED Fade Control",
+		description:"Default is Disabled.\n",
+		default:0,
+		action:"generic /sys/class/sec/led/led_fade",
+		values:{
+			0:"Disabled", 1:"Enabled"
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SSeekBar:{
+		title:"Fade-in",
+		description:"Sets the time period of the rising slope. Default is 800.\n",
+		unit:" ms",
+		min:100,
+		max:2000,
+		step:100,
+		default:$(cat /sys/class/sec/led/led_fade_time_up),
+		action:"generic /sys/class/sec/led/led_fade_time_up"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SSeekBar:{
+		title:"Fade-out",
+		description:"Sets the time period of the falling slope. Default is 800.\n",
+		unit:" ms",
+		min:100,
+		max:2000,
+		step:100,
+		default:$(cat /sys/class/sec/led/led_fade_time_down),
+		action:"generic /sys/class/sec/led/led_fade_time_down"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+    ]
+}
+CTAG
