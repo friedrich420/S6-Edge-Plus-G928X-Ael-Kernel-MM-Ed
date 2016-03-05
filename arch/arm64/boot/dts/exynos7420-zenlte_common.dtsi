@@ -2294,4 +2294,12 @@
 		gpios = <&gpr1 7 0	/*VRECT_EN*/
 				&gpr1 5 0	/*2CA,3CA*/ >;
 	};
+	
+	pmu {
+		compatible = "arm,armv8-pmuv3";
+		interrupts = <0 60 4>,
+			     <0 61 4>,
+			     <0 62 4>,
+			     <0 63 4>;
+	};
 };
